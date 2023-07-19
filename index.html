@@ -9,16 +9,17 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<!-- <script src = "./assets/js/portfolioFunctions.js"></script> -->
+	<script src="./assets/js/main.js" defer></script>
+	<script src = "./assets/js/scripts.js"></script>
 </head>
 <body>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li>login</li>
+			<li><a href="#portfolio">projets</a></li>
+			<li><a href="#contact">contact</a></li>
+			<li><a href="login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -37,6 +38,9 @@
 	</section>
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
+		<ul id="filter">
+
+		</ul>
 		<div class="gallery" id="gallery">
 
 		</div>
@@ -55,38 +59,7 @@
 		</form>
 	</section>
 </main>
-<script>
 
-	const myHostname = "http://localhost:5678/";
-	const myAction = "api/works";
-	const myReq = myHostname + myAction;
-	//Création du noeud pour l'insertion dans le DOM
-	let myNode = document.getElementById("gallery");
-
-	fetch(myReq)
-		//Récupération de la réponse de type json  à la requête
-		.then(response => response.json())
-		//La réponse contient un tableau d'objet définnisant les travaux : on le parcours
-		.then (function(works) {
-			//Pour chaque travail
-			works.forEach(work => {
-				//Création de la balise figure en tant que dernier enfant du noeud, soit la balise avec id = gallery
-				let newWork = document.createElement("figure");
-				myNode.appendChild(newWork);
-				//Création d'une balise image avec les attributs du html d'origine
-				let newImage = document.createElement("img");
-				newImage.setAttribute("src",work.imageUrl);
-				newImage.setAttribute("alt",work.title);
-				//Création d'une balise caption et de son contenu HTML
-				let newCaption = document.createElement("figcaption");
-				newCaption.innerHTML = work.title;
-				//Insertion dans le DOM des balises image et caption en tant qu'enfant de la balise figure
-				newWork.appendChild(newImage);
-				newWork.appendChild(newCaption);
-			});
-		})
-
-</script>
 <footer>
 	<nav>
 		<ul>
@@ -95,4 +68,12 @@
 	</nav>
 </footer>
 </body>
+<script>
+	// let myListElement = document.querySelectorAll("#filter li");
+	// myListElement.forEach(function(item){
+	// 	console.log(item)
+	// });
+// console.log("test");
+
+</script>
 </html>

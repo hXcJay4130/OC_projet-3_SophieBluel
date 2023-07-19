@@ -48,10 +48,11 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
+	max-width: 1440px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	/* padding: 0 400px; */
 }
 header {
 	display: flex;
@@ -59,7 +60,8 @@ header {
 	margin: 50px 0
 }
 section {
-	margin: 50px 0
+	margin: 50px 0;
+	background-color: #FFFEF8;
 }
 
 h1{
@@ -90,13 +92,18 @@ nav ul {
 	list-style-type: none;
 
 }
-nav li {
+nav li a {
 	padding: 0 10px;
+	font-family: 'Work Sans';
 	font-size: 1.2em;
+	font-weight: 400;
+	color: #000000;
+	text-decoration: none;
 }
 
-li:hover {
+nav li a:hover {
 	color: #B1663C;
+	cursor: pointer;
 }
 #introduction {
 	display: flex;
@@ -137,13 +144,34 @@ li:hover {
 	width: 100%;
 
 }
+
+#filter {
+	display: flex;
+	justify-content: center;
+	padding-top: 20px;
+	padding-bottom: 50px;;
+}
+#filter li {
+	font: 700 16px "Syne";
+	border: solid 1px #1D6154;
+	border-radius: 30px;
+	padding: 12px;
+	margin: 0 5px;
+}
+.activeFilter,#filter li:hover {
+	background-color: #1D6154;
+	color:white;
+	cursor: pointer;
+}
+.unActiveFilter {
+	color: #1D6154;
+}
 #contact {
 	width: 50%;
 margin: auto;
 }
 #contact > * {
 	text-align: center;
-
 }
 #contact h2{
 	margin-bottom: 20px;
@@ -186,3 +214,70 @@ footer nav ul {
 	margin: 2em
 }
 
+
+/* CSS spécifique à la page login */
+
+/**************** Pied de page en bas ***************/
+#loginBody {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: #FFFEF8;
+}
+#loginMain {
+	flex: 1 1 auto;
+	
+}
+/****************************************************/
+nav ul li span a {
+	font-weight: 700;
+	/* color: aquamarine; */
+}
+nav ul li span a:hover {
+	color: #000000;
+	cursor:default;
+}
+#login {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 400px;
+	margin:auto;
+}
+#login form {
+	display: flex;
+	flex-direction: column;
+	
+	/* align-items: center; */
+}
+#login > * {
+	/* text-align: center; */
+}
+#login input[type="text"],#login input[type="password"] {
+	width: 380px;
+	height: 50px;
+}
+#login input[type="submit"] {
+	padding: 10px;
+	border: none;
+}
+#login label {
+	margin-top: 40px;
+	margin-bottom: 10px;
+}
+#login a {
+	text-decoration: none;
+	color: #000000;
+}
+#login p {
+	color:red;
+	font-weight: bolder;
+	margin: 50px 0;
+}
+#loginFooter {
+	display: flex;
+	justify-content: flex-end;
+	padding: 20px;
+	padding-right: 50px;
+	background-color: white;
+}
