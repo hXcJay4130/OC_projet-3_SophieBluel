@@ -378,6 +378,12 @@ nav ul li span a:hover {
 	cursor: pointer;
 }
 
+#closure {
+	align-self:flex-end;
+	margin-right: 30px;
+	cursor: pointer;
+}
+
 #galleryEdit {
 	width: 80%;
 	display: grid;
@@ -391,7 +397,9 @@ nav ul li span a:hover {
 #galleryEdit img {
 	width: 100%;
 }
-
+#galleryEdit figure {
+	position:sticky;
+}
 
 
 .active {
@@ -408,5 +416,28 @@ nav ul li span a:hover {
 	color:white;
 	cursor: pointer;
 }
+
+.imgIcon {
+	position: absolute;
+	left: 60px;
+	bottom: 105px;
+	height: 20px;
+	width: 20px;
+	padding: 1px;
+	background-color: #000000;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.imgIcon i {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+  }
+
+
 
 	

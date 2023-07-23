@@ -140,10 +140,10 @@ function htmlDecode(encodedString) {
 }
 
 
-// Fonction qui créer les élément "figure" qui montrent les travaux
+// Fonction qui créer les élément "figure" qui montrent les travaux sur la galerie
 // Elle prend en paramètre les travaux de la catégorie de filtration
 function worksDisplay(worksToDisplay) {
-    console.log("création galerie");
+    
     let myGalleryNode = document.getElementById("gallery");
     //Pour chaque travail
     worksToDisplay.forEach(work => {
@@ -165,25 +165,34 @@ function worksDisplay(worksToDisplay) {
     });
 }
 
+// Fonction qui créer les élément "figure" qui montrent les travaux sur la modale
+// Elle prend en paramètre l'ensemble des travaux
 function worksEditDisplay(worksToDisplay) {
-    console.log("création galerie edit 2");
+    
     let myGalleryNode = document.getElementById("galleryEdit");
     //Pour chaque travail
     worksToDisplay.forEach(work => {
         //Création de la balise figure en tant que dernier enfant du noeud, soit la balise avec id = gallery
         let newWork = document.createElement("figure");
-        //On ajoute la classe qui rend visible
         myGalleryNode.appendChild(newWork);
-        
         //Création d'une balise image avec les attributs du html d'origine
         let newImage = document.createElement("img");
         newImage.setAttribute("src",work.imageUrl);
         newImage.setAttribute("alt",work.title);
-        //Création d'une balise caption et de son contenu HTML
+        newWork.appendChild(newImage);
+        //Création d'une balise div qui contiendra l'icone poubelle
+        //C'est le carré noir à coin arrondis
+        let myDivImgIcon = document.createElement("div");
+        myDivImgIcon.setAttribute("class","imgIcon");
+        newWork.appendChild(myDivImgIcon);
+        //Création d'une balise icone poubelle, enfant du div "myDivImgIcon"
+        let newIcon = document.createElement("i");
+        newIcon.setAttribute("class","fa-solid fa-trash-can");
+        myDivImgIcon.appendChild(newIcon);
+        //Création d'une balise caption avec le lien "édition"
         let newCaption = document.createElement("figcaption");
         newCaption.innerHTML = "édition";
         //Insertion dans le DOM des balises image et caption en tant qu'enfant de la balise figure
-        newWork.appendChild(newImage);
         newWork.appendChild(newCaption);
     });
 }

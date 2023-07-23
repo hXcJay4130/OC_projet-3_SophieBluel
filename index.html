@@ -10,12 +10,11 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
-	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<meta name="description" content="">
 	<script src="./assets/js/popup.js" defer></script>
 	<script src = "./assets/js/scripts.js" defer></script>
 	<script src="./assets/js/main.js" defer></script>
-	
 </head>
 <body>
 <header>
@@ -80,8 +79,17 @@
 <!-- Popup d'édition -->
 <div class="popupBackground">
 	<div class="popup">
+		<i class="fa-solid fa-xmark" id="closure"></i>
 		<h1>Galerie photos</h1>
-		<div id="galleryEdit"></div>
+		<div id="galleryEdit">
+			<figure>
+				<img src="http://localhost:5678/images/abajour-tahina1651286843956.png" alt="">
+				<div class="imgIcon">
+					<i class="fa-solid fa-trash-can"></i>
+				</div>
+				<figcaption>éditer**</figcaption>
+			</figure>
+		</div>
 		<button id="btnAjout">Ajouter une photo</button>
 		<span>Supprimer la galerie</span>
 	</div>

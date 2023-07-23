@@ -1,13 +1,13 @@
 /*********************************************************************************
  * 
  * Ce fichier contient toutes les fonctions nécessaires à l'affichage et à la 
- * fermeture de la popup de partage. 
+ * fermeture de la popup d'édition. 
  * 
  *********************************************************************************/
 
 
 /**
- * Cette fonction affiche la popup pour partager son score. 
+ * Cette fonction affiche la popup d'édition. 
  */
 function showPopup() {
     let popupBackground = document.querySelector(".popupBackground")
@@ -17,7 +17,7 @@ function showPopup() {
 }
 
 /**
- * Cette fonction cache la popup pour partager son score. 
+ * Cette fonction cache la popup d'édition. 
  */
 function hidePopup() {
     let popupBackground = document.querySelector(".popupBackground")
@@ -31,17 +31,15 @@ function hidePopup() {
  * l'affichage de la popup. 
  */
 function initAddEventListenerPopup() {
-    // On écoute le click sur le bouton "partager"
-    // console.log("initialisation pop up");
+    // On écoute le click sur le bouton "édition" de la page principale
     let btnEdit = document.querySelector("#titre .edit")
-    // console.log("bouton édit : " + btnEdit);
     let popupBackground = document.querySelector(".popupBackground")
     btnEdit.addEventListener("click", () => {
         // Quand on a cliqué sur le bouton "modifier", on affiche la popup
         showPopup()
     })
 
-    // On écoute le click sur la div "popupBackground"
+    // On écoute le click sur la div "popupBackground" (à l'extérieur de la popup)
     popupBackground.addEventListener("click", (event) => {
         // Si on a cliqué précisément sur la popupBackground 
         // (et pas un autre élément qui se trouve dedant)
@@ -50,11 +48,15 @@ function initAddEventListenerPopup() {
             hidePopup()
         }
     })
-
+    // au click sur le bouton "éditer" la pop up s'affiche
     let editButton = document.getElementById("btn-edit");
-    // console.log("deuxieme bouton édit : " + editButton);
     editButton.addEventListener("click",() => {
-        console.log("evenement lancé")
+        // console.log("evenement lancé")
         showPopup()
+    });
+    // on écoute le click sur la croix pour fermer la popup
+    let closureCross = document.getElementById("closure");
+    closureCross.addEventListener("click", () => {
+        hidePopup()
     });
 }
