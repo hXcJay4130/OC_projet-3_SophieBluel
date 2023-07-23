@@ -7,27 +7,37 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script src="./assets/js/popup.js" defer></script>
+	<script src = "./assets/js/scripts.js" defer></script>
 	<script src="./assets/js/main.js" defer></script>
-	<script src = "./assets/js/scripts.js"></script>
+	
 </head>
 <body>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-	<nav>
-		<ul>
-			<li><a href="#portfolio">projets</a></li>
-			<li><a href="#contact">contact</a></li>
-			<li><a href="login.html">login</a></li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-		</ul>
-	</nav>
+	<section id="editMode"><p class ="edit"><i class="fa-solid fa-pen-to-square"></i>Mode édition</p></section>
+	<section id="menu">
+		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+		<nav>
+			<ul>
+				<li><a href="#portfolio">projets</a></li>
+				<li><a href="#contact">contact</a></li>
+				<li><a href="login.html" id="btn-login"></a></li>
+				<li><a href="index.html" id="btn-logout" onclick="tokenDelete()"></a></li>
+				<li><a href="#"><img src="./assets/icons/instagram.png" alt="Instagram"></a></li>
+			</ul>
+		</nav>
+	</section>
 </header>
 <main>
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<p class ="edit"><i class="fa-solid fa-pen-to-square"></i>Modifier</p>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -37,13 +47,12 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<ul id="filter">
-
-		</ul>
-		<div class="gallery" id="gallery">
-
+		<div id="titre">
+			<h2>Mes Projets</h2>
+			<p class ="edit"><i class="fa-solid fa-pen-to-square"></i><button id="btn-edit">Modifier</button></p>
 		</div>
+		<ul id="filter"></ul>
+		<div class="gallery" id="gallery"></div>
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>
@@ -67,13 +76,17 @@
 		</ul>
 	</nav>
 </footer>
-</body>
-<script>
-	// let myListElement = document.querySelectorAll("#filter li");
-	// myListElement.forEach(function(item){
-	// 	console.log(item)
-	// });
-// console.log("test");
 
-</script>
+<!-- Popup d'édition -->
+<div class="popupBackground">
+	<div class="popup">
+		<h1>Galerie photos</h1>
+		<div id="galleryEdit"></div>
+		<button id="btnAjout">Ajouter une photo</button>
+		<span>Supprimer la galerie</span>
+	</div>
+</div>
+
+</body>
+
 </html>

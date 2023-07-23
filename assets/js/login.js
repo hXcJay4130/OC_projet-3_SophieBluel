@@ -1,4 +1,5 @@
 const loginForm = document.querySelector("form");
+sessionStorage.setItem('myToken', '') ;
 loginForm.addEventListener("submit", (event) => {
     
     //Récupération des valeurs de champs
@@ -8,7 +9,6 @@ loginForm.addEventListener("submit", (event) => {
     const emailInput = emailUser.value.trim();
     const passwordInput = passwordUser.value.trim();
 
-    
     //try catch pour valider le formulaire
     try {
         errorDisplay();
@@ -24,12 +24,15 @@ loginForm.addEventListener("submit", (event) => {
         fieldCheck(passwordUser,pwdRegex);
         //On envoie le couple login/mot de passe avec fetch
         const reqResp = sendData(emailInput, passwordInput);
-        localStorage.setItem('myToken', reqResp);
+        reqResp.then(function(reponse) {  
+            loginForm.submit();
+            sessionStorage.setItem('myToken', reponse["token"]);
+            // console.log("Token : " + sessionStorage.getItem('myToken'));        
+        });
     }
     catch (error) {
         errorDisplay(error);
     }
-    loginForm.submit();
 });
 
 function fieldCheck(formField, regexString) {
@@ -60,24 +63,21 @@ async function sendData(login, password) {
     const myAction = "api/users/login";
     const myReq = myHostname + myAction;
 
-    let response = await fetch(myReq, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-    },
-    body: JSON.stringify(user)
-    });
-    try {
 
-        if (response.ok) { // if HTTP-status is 200-299
-            // obtenir le corps de réponse (la méthode expliquée ci-dessous)
-            let json = await response.json();
-            console.log(response.ok);
-            return json["token"];
+    try {
+        let response = await fetch(myReq, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(user)
+        });
+        let json = await response.json();
+        if (response.ok) { // si la requête abouti
+            // obtenir le corps de réponse
+            return json;
         } else {
-            // console.log(response.ok);
-            // return response.status;
-            // alert("HTTP-Error: " + response.status);
+            // Si la reponse n'est pas ok, on a deux possibilités de code d'erreur
             if (response.status == 404) {
                 // alert("L'utilisateur n'existe pas.");
                 throw new Error("L'utilisateur n'existe pas.");
