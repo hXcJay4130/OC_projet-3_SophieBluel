@@ -212,7 +212,7 @@ nav li a:hover {
 }
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
@@ -220,20 +220,21 @@ margin: auto;
 #contact h2{
 	margin-bottom: 20px;
 }
-#contact form {
+#contact form, #createForm form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+#contact input, #createForm input, #createForm select {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	background-color: transparent;
 }
-#contact label {
+#contact label, #createForm label {
 	margin: 2em 0 1em 0;
 }
 #contact textarea {
@@ -291,11 +292,6 @@ nav ul li span a:hover {
 #login form {
 	display: flex;
 	flex-direction: column;
-	
-	/* align-items: center; */
-}
-#login > * {
-	/* text-align: center; */
 }
 #login input[type="text"],#login input[type="password"] {
 	width: 380px;
@@ -343,34 +339,26 @@ nav ul li span a:hover {
 .popup {
 	display: flex;
 	flex-direction: column;
-	/* flex-wrap: wrap; */
-    position: absolute;
+	position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
-    /* justify-content: center; */
-	/* justify-items: center; */
 	align-items: center;
     width: 630px;
-    padding: 40px 0;
     text-align: center;
     color: black;
-    /* font-size: 17px; */
-    /* font-weight: 500; */
     background-color: white;
     border-radius: 10px;
     z-index: 1;
 }
 
 .popup h1 {
-	/* font: 16px "Work Sans" 400; */
 	font-family: "Work Sans";
 	font-size: 26px;
 	font-weight: 400;
 	color: black;
 	line-height: 30.5px;
-	margin-bottom:40px;
+	margin-top: 20px;
 	
 }
 .popup span {
@@ -378,14 +366,16 @@ nav ul li span a:hover {
 	cursor: pointer;
 }
 
-#closure {
-	align-self:flex-end;
-	margin-right: 30px;
+#popupSheet_1, #popupSheet_2 {
+	display: none;
+}
+
+#closure,#backArrow {
 	cursor: pointer;
 }
 
 #galleryEdit {
-	width: 80%;
+	/* width: 80%; */
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	grid-column-gap: 20px;
@@ -394,6 +384,7 @@ nav ul li span a:hover {
 	border-bottom: solid 1px lightgrey;
 }
 
+
 #galleryEdit img {
 	width: 100%;
 }
@@ -401,14 +392,33 @@ nav ul li span a:hover {
 	position:sticky;
 }
 
-
+#createForm {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	padding-bottom:60px;
+	border-bottom: solid 1px lightgrey;
+}
+#createForm select, #createForm input {
+	font-size: 0.9em;
+}
 .active {
     display: flex !important;
 }
+.activePopup {
+	display: flex !important;
+	flex-direction: column;
+	align-items: center;
+	width: 80%;
+}
+.unactiveIcon {
+	display:none;
+}
 
-#btnAjout {
+#btn-sheet_2 {
 	font: 700 16px "Syne";
 	border-radius: 30px;
+	border: none;
 	padding: 12px 60px;
 	margin-top: 40px;
 	margin-bottom: 20px;
@@ -437,7 +447,60 @@ nav ul li span a:hover {
 	left: 50%;
 	transform: translate(-50%, -50%);
   }
+#popup-menu {
+	display: flex;
+	width: 90%;
+	
+	margin-top: 20px;
+}
+.popup-menu-2icons {
+	justify-content: space-between;
+}
+.popup-menu-1icon {
+	justify-content: flex-end;
+}
 
 
 
+#imgDownload {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 30px;
+	/* width: 80%; */
+	border-radius: 3px;
+	background-color: #E8F1F6;
+}
+
+#imgDownload label {
+	margin-top: 20px;
+}
+
+#imgDownload p {
+	margin-top: 20px;
+}
+
+#btn-add {
+	font: 700 16px "Syne";
+	border-radius: 30px;
+	border: none;
+	padding: 12px 40px;
+	margin-top: 40px;
+	/* margin-bottom: 20px; */
+	background-color: #CBD6DC;
+	color:#306685;
+	cursor: pointer;
+}
+
+#btn-valid {
+	font: 700 16px "Syne";
+	border-radius: 30px;
+	border: none;
+	padding: 12px 90px;
+	margin-top: 40px;
+	margin-bottom: 20px;
+	background-color: #A7A7A7;
+	color:white;
+	cursor: pointer;
+}
 	

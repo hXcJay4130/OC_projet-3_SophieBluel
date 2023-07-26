@@ -1,4 +1,4 @@
-//*********Fonction adaptant mettant la page index.html en mode edition ou en mode visiteur*/
+//*********Fonction mettant la page index.html en mode edition ou en mode visiteur*/
 function logVisibility() {
     let token = sessionStorage.getItem("myToken");
     let buttonLogin = document.getElementById("btn-login");
@@ -72,7 +72,21 @@ function chargerGallerieFiltres() {
             worksWithoutFilter.forEach(function(work) {
                 categoriesSet.add(work.category.name);
                 });
-            //Création des la liste non ordonnée des filtres
+            // implémentation des options select de catégorie pour la popup d'édition
+            let mySelect =  document.getElementById("categoryChoice");
+            let newOption = document.createElement("option");
+            newOption.setAttribute("value","");
+            newOption.innerHTML = "";
+            mySelect.appendChild(newOption);
+            categoriesSet.forEach((category)=> {
+                let newOption = document.createElement("option");
+                newOption.setAttribute("value",category);
+                newOption.innerHTML = category;
+                mySelect.appendChild(newOption);
+            });
+            
+
+            //Création des la liste non ordonnée des filtres de catégorie
             filterCreation(categoriesSet);
             //Evènement sur les filtres
             let myElement = document.querySelectorAll("#filter li");
@@ -96,9 +110,7 @@ function chargerGallerieFiltres() {
                     }
                     // On génère la gallerie seuleemnt avec les travaux qui ont pour catégorie celle du filtre
                     worksDisplay(filteredWorks);
-                    console.log("galerie");
-                    
-                    console.log("galerie edit 1")
+
                     //Les filtres (éléments li) sont définis "actif" si on afiche les travaux de ce filtre, inactif sinon
                     //Il faut donc activer le li du filtre choisi
                     activateFilter(myFilter);

@@ -12,6 +12,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer">
 	<link rel="stylesheet" href="./assets/style.css">
 	<meta name="description" content="">
+	<script src="./assets/js/api.js" defer></script>
 	<script src="./assets/js/popup.js" defer></script>
 	<script src = "./assets/js/scripts.js" defer></script>
 	<script src="./assets/js/main.js" defer></script>
@@ -79,19 +80,47 @@
 <!-- Popup d'édition -->
 <div class="popupBackground">
 	<div class="popup">
-		<i class="fa-solid fa-xmark" id="closure"></i>
-		<h1>Galerie photos</h1>
-		<div id="galleryEdit">
-			<figure>
-				<img src="http://localhost:5678/images/abajour-tahina1651286843956.png" alt="">
-				<div class="imgIcon">
-					<i class="fa-solid fa-trash-can"></i>
-				</div>
-				<figcaption>éditer**</figcaption>
-			</figure>
+		<!-- 1ère feuille de la popup -->
+		<div id="popup-menu">
+			<i class="fa-solid fa-arrow-left" id="backArrow"></i>
+			<i class="fa-solid fa-xmark" id="closure"></i>
 		</div>
-		<button id="btnAjout">Ajouter une photo</button>
-		<span>Supprimer la galerie</span>
+		<h1>Galerie photos</h1>
+		<section id="popupSheet_1">
+			<div id="galleryEdit"></div>
+			<button id="btn-sheet_2">Ajouter une photo</button>
+			<span>Supprimer la galerie</span>
+		</section>
+		<!-- 2ème feuille de la popup -->
+		<section id="popupSheet_2">
+			<div id="createForm">
+				<div id="imgDownload">
+					<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						width="58px" height="46.518px" viewBox="0 0 58 46.518" enable-background="new 0 0 58 46.518" xml:space="preserve">
+						<path fill="#B9C5CC" d="M0,0v46.518h58V0H0z M56.999,45.517H1.001V1.001h55.997V45.517z"/>
+						<path fill="#B9C5CC" d="M15.222,10.658c-3.199,0-5.801,2.602-5.801,5.801c0,3.198,2.602,5.8,5.801,5.8s5.801-2.602,5.801-5.8
+							C21.022,13.26,18.42,10.658,15.222,10.658z M15.222,20.256c-2.098,0-3.798-1.7-3.798-3.798s1.7-3.798,3.798-3.798
+							s3.798,1.701,3.798,3.798S17.319,20.256,15.222,20.256z"/>
+						<path fill="#B9C5CC" d="M53.104,28.9L41.623,17.771c-0.372-0.36-0.955-0.377-1.348-0.042L28.372,27.897l-3.886-3.767
+							c-0.371-0.36-0.955-0.378-1.348-0.042L4.944,39.633c-0.42,0.358-0.47,0.99-0.111,1.411c0.198,0.232,0.479,0.351,0.762,0.351
+							c0.23,0,0.461-0.078,0.65-0.24l17.501-14.952l10.828,10.494c0.397,0.385,1.032,0.376,1.416-0.022
+							c0.385-0.396,0.375-1.03-0.022-1.415l-6.151-5.962l11.065-9.454L51.71,30.337c0.396,0.385,1.031,0.376,1.416-0.021
+							S53.501,29.285,53.104,28.9z"/>
+					</svg>
+					<!-- <button id="btn-add">+ Ajouter Photo</button> -->
+					<label for="file" id="btn-add">+ Ajouter Photo</label>
+					<input type="file" id="file" accept=".jpg, .jpeg, .png">
+					<p>jpg, png : 4mo max</p>
+				</div>
+				<form action="">
+					<label for="title">Titre</label>
+					<input type="text" name="title">
+					<label for="category">Catégorie</label>
+					<select name="category" id="categoryChoice"></select>
+				</form>
+			</div>
+			<button id="btn-valid">Valider</button>
+		</section>
 	</div>
 </div>
 
