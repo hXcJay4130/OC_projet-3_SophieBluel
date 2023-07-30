@@ -1,39 +1,43 @@
-async function getAllWorks() {
+async function getAllWorks(request) {
+    // console.log("On est dans getAllWorks");
     // Récupération des données provenant du back-end pour les travaux
-    const response = await fetch("http://localhost:5678/api/works");
+    const response = await fetch(request);
+    // console.log("Réponse : " + response);
     const works = await response.json();
+    // console.log("Retour : " + works);
     return works;
 };
 
 
-async function getAllCategories() {
+async function getAllCategories(request) {
     // Récupération des données provenant du back-end pour les catégories
     const response = await fetch("http://localhost:5678/api/categories");
     const categories = await response.json();
     return categories;
 };
 
-async function deleteWorkAPI(workId) {
-    let storedToken = window.localStorage.getItem("token");
+async function deleteWorkAPI(workId,request) {
+    let storedToken = window.sessionStorage.getItem("myToken");
+    // console.log("storedToken : " + storedToken);
     let url = "";
     let httpOptions = "";
     let bearer = "Bearer " + storedToken;
-    console.log(bearer);
+    // console.log(bearer);
 
     if (storedToken !== null) {
         const headersContent = {
         "Accept": "*/*",
         "Authorization": bearer
         };
-        console.log(headersContent);
+        // console.log(headersContent);
         const headers = new Headers(headersContent);
-        console.log(headers);
+        // console.log(headers);
         httpOptions = {
         method : "DELETE",
         headers: headers,
         };
-        url = "http://localhost:5678/api/works/" + workId;
-        console.log(httpOptions);
+        url = request + "/" + workId;
+        // console.log(httpOptions);
     }
     try {     
         const response = await fetch(url, httpOptions);
@@ -43,10 +47,10 @@ async function deleteWorkAPI(workId) {
     }
 }; 
 
-async function addPicture(formDatas) {
+async function addPicture(formDatas,request) {
 
        // récupérations des autres éléments constitutifs des options de la requête
-        let storedToken = window.localStorage.getItem("token");
+        let storedToken = window.sessionStorage.getItem("myToken");
         let bearer = "Bearer " + storedToken;
         let httpOptions = "";
 
@@ -61,10 +65,10 @@ async function addPicture(formDatas) {
                 headers: headers,
                 body: formDatas
             };
-            console.log(httpOptions);
+            // console.log(httpOptions);
         }
         try {
-            const response = await fetch("http://localhost:5678/api/works", httpOptions);
+            const response = await fetch(request, httpOptions);
             console.log(response.status);
             
             if (response.status === 201) {

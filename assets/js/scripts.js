@@ -1,3 +1,71 @@
+
+
+// ****fonction principale de chargement de page****
+// Au lancement de la page :
+        // on récupère les données des travaux sur l'API
+        // on crée un set de catégorie pour avoir la liste sans doublon des catégories et pouvoir créer les filtres
+        // on génère les éléments du filtre
+        // on ajoute un écouteur d'évènement sur chaque élément du filtre
+function chargerGallerieFiltres() {
+    //Effacement des deux galeries
+
+    //Récupération de l'ensemble des travaux
+    getAllWorks(myReq).then(worksWithoutFilter => {
+        //Création d'un set de catégories (donc sans doublon)
+        let categoriesNameSet = new Set(); 
+        let categoriesIdSet = new Set(); 
+        Array.from(worksWithoutFilter).forEach((work) => {
+            categoriesNameSet.add(work.category.name);
+            categoriesIdSet.add(work.category.id);
+            // console.log("categories id : " + work.category.id);
+            // console.log("categories name : " + work.category.name);
+        });
+        //Création des la liste non ordonnée des filtres de catégorie
+        filterCreation(categoriesNameSet);
+        //Chaque filtre doit écouter le click pour filtrer => ajout d'évènement
+        filterEvent(worksWithoutFilter);
+        //Création des <figure> des travaux pour l'affichage par défaut de la page
+        worksDisplay(worksWithoutFilter);
+        // On génèrer la galerie de la popup d'édition
+        worksEditDisplay(worksWithoutFilter);
+        //initialisation de la popup d'édition
+        initAddEventListenerPopup(categoriesNameSet,categoriesIdSet);
+    });
+};
+
+    
+
+//*********Fonction ajoutant les évènements click sur les filtres */
+function filterEvent(allWorks) {
+    let myElement = document.querySelectorAll("#filter li");
+    //***********************Gallerie*********************/
+    myElement.forEach(function(item) {
+        item.addEventListener("click", ()=> {
+            //Vider la galerie
+            let myGallery = document.getElementById("gallery");
+            myGallery.innerHTML = "";
+            //Générer la gallerie selon le filtre de catégorie
+            let myFilter = htmlDecode(item.innerHTML);
+            //Par défaut il n'y a pas de filtre donc le tableau "filteredWorks" est le même que "worksWithoutFilter"
+            let filteredWorks = [...allWorks];
+            // Ce tableau est filtré seulement si on est sur un filtre différent de "Tous"
+            if (myFilter !== "Tous") {
+                filteredWorks = allWorks.filter(function(work){
+                    if (work.category.name === myFilter) {
+                        return work;
+                    }
+                });
+            }
+            // On génère la gallerie seulement avec les travaux qui ont pour catégorie celle du filtre
+            worksDisplay(filteredWorks);
+
+            //Les filtres (éléments li) sont définis "actif" si on afiche les travaux de ce filtre, inactif sinon
+            //Il faut donc activer le li du filtre choisi
+            activateFilter(myFilter);
+        });          
+    });
+}
+
 //*********Fonction mettant la page index.html en mode edition ou en mode visiteur*/
 function logVisibility() {
     let token = sessionStorage.getItem("myToken");
@@ -13,8 +81,6 @@ function logVisibility() {
         buttonLogin.style["display"] = "display";
         buttonLogin.innerHTML = "login";
         buttonLogout.style["display"] = "none";
-        //On supprime l'évènement sur logout en mode visiteur
-        // buttonLogout.removeEventListener("click",tokenDelete());
         // le bandeau édition n'est pas visible en mode visiteur
         myDiv.classList.add("notVisible");
         // les paragraphe avec l'indication "modifier" ne sont pas visibles en mode visiteur
@@ -22,15 +88,13 @@ function logVisibility() {
             paragraphe.classList.add("notVisible");
         });
         // le filtre est visible en mode visiteur
-       myFilter.style["visibility"] = "visible";  
+        myFilter.style["visibility"] = "visible";  
     // mode édition
     } else {
         // le dernier bouton du menu est "logout"
         buttonLogin.style["display"] = "none";
         buttonLogout.style["display"] = "display";
         buttonLogout.innerHTML = "logout";
-        //On écoute le bouton logout pour supprimer le token
-        // buttonLogout.addEventListener("click",tokenDelete());
         // le bandeau édition est visible en mode édition
         myDiv.classList.remove("notVisible");
         // les paragraphe avec l'indication "modifier" sont visibles en mode édition
@@ -39,6 +103,7 @@ function logVisibility() {
         });
         // le filtre n'est pas visible en mode édition
         myFilter.style["visibility"] = "collapse";
+        
     }
     // console.log("Token après : " + sessionStorage.getItem("myToken"));
 }
@@ -47,86 +112,7 @@ function tokenDelete() {
     sessionStorage.removeItem("myToken");
 }
 
-// ****fonction principale de chargement de page****
-// Au lancement de la page :
-        // on récupère les données des travaux sur l'API
-        // on crée un set de catégorie pour avoir la liste sans doublon des catégories et pouvoir créer les filtres
-        // on génère les éléments du filtre
-        // on ajoute un écouteur d'évènement sur chaque élément du filtre
-function chargerGallerieFiltres() {
-
-    const myHostname = "http://localhost:5678/";
-    const myAction = "api/works";
-    const myReq = myHostname + myAction;
-    
-    initAddEventListenerPopup();
-    fetch(myReq)
-        //Récupération de la réponse de type json  à la requête (tous les travaux)
-        .then(response => response.json())
-        //La réponse contient un tableau d'objet "worksWithoutFilter" définissant les travaux : on le parcours
-        .then (function(worksWithoutFilter) {
-
-            //*********************Filtres**********************/
-            //Création d'un set de catégories (donc sans doublon)
-            let categoriesSet = new Set(); 
-            worksWithoutFilter.forEach(function(work) {
-                categoriesSet.add(work.category.name);
-                });
-            // implémentation des options select de catégorie pour la popup d'édition
-            let mySelect =  document.getElementById("categoryChoice");
-            let newOption = document.createElement("option");
-            newOption.setAttribute("value","");
-            newOption.innerHTML = "";
-            mySelect.appendChild(newOption);
-            categoriesSet.forEach((category)=> {
-                let newOption = document.createElement("option");
-                newOption.setAttribute("value",category);
-                newOption.innerHTML = category;
-                mySelect.appendChild(newOption);
-            });
-            
-
-            //Création des la liste non ordonnée des filtres de catégorie
-            filterCreation(categoriesSet);
-            //Evènement sur les filtres
-            let myElement = document.querySelectorAll("#filter li");
-            //***********************Gallerie*********************/
-            myElement.forEach(function(item) {
-                item.addEventListener("click", ()=> {
-                    //Vider la gallerie
-                    let myGallery = document.getElementById("gallery");
-                    myGallery.innerHTML = "";
-                    //Générer la gallerie selon le filtre de catégorie
-                    let myFilter = htmlDecode(item.innerHTML);
-                    //Par défaut il n'y a pas de filtre donc le tableau "filteredWorks" est le même que "worksWithoutFilter"
-                    let filteredWorks = [...worksWithoutFilter];
-                    // Ce tableau est filtré seulement si on est sur un filtre différent de "Tous"
-                    if (myFilter !== "Tous") {
-                        filteredWorks = worksWithoutFilter.filter(function(work){
-                            if (work.category.name === myFilter) {
-                                return work;
-                            }
-                        });
-                    }
-                    // On génère la gallerie seuleemnt avec les travaux qui ont pour catégorie celle du filtre
-                    worksDisplay(filteredWorks);
-
-                    //Les filtres (éléments li) sont définis "actif" si on afiche les travaux de ce filtre, inactif sinon
-                    //Il faut donc activer le li du filtre choisi
-                    activateFilter(myFilter);
-                });          
-            });
-            
-            //Création des <figure> des travaux pour l'affichage par défaut de la page
-            worksDisplay(worksWithoutFilter);
-            // On génèrer la galerie de la popup d'édition
-            worksEditDisplay(worksWithoutFilter);
-        });
-
-};
-
-
-// Cette fonction génère les éléments li du filtre
+    // Cette fonction génère les éléments li du filtre
 // "Tous" est généré en premier et sans utiliser les données reçu par fetch
 // Il reçoit la classe "activeFilter"  pour avoir l'aspect "sélectionné"
 // Les autres reçoivent la classe "unactiveFilter"  pour avoir l'aspect "non sélectionné"
@@ -155,13 +141,13 @@ function htmlDecode(encodedString) {
 // Fonction qui créer les élément "figure" qui montrent les travaux sur la galerie
 // Elle prend en paramètre les travaux de la catégorie de filtration
 function worksDisplay(worksToDisplay) {
-    
     let myGalleryNode = document.getElementById("gallery");
     //Pour chaque travail
-    worksToDisplay.forEach(work => {
+    Array.from(worksToDisplay).forEach(work => {
         //Création de la balise figure en tant que dernier enfant du noeud, soit la balise avec id = gallery
         let newWork = document.createElement("figure");
-        //On ajoute la classe qui rend visible
+        //On ajoute un id pour faciliter l'effacement lors de l'édition des travaux
+        newWork.setAttribute("id","figGallery-" + work.id);
         myGalleryNode.appendChild(newWork);
         
         //Création d'une balise image avec les attributs du html d'origine
@@ -183,9 +169,10 @@ function worksEditDisplay(worksToDisplay) {
     
     let myGalleryNode = document.getElementById("galleryEdit");
     //Pour chaque travail
-    worksToDisplay.forEach(work => {
+    Array.from(worksToDisplay).forEach(work => {
         //Création de la balise figure en tant que dernier enfant du noeud, soit la balise avec id = gallery
         let newWork = document.createElement("figure");
+        newWork.setAttribute("id","figGalleryThumb-" + work.id);
         myGalleryNode.appendChild(newWork);
         //Création d'une balise image avec les attributs du html d'origine
         let newImage = document.createElement("img");
@@ -195,7 +182,9 @@ function worksEditDisplay(worksToDisplay) {
         //Création d'une balise div qui contiendra l'icone poubelle
         //C'est le carré noir à coin arrondis
         let myDivImgIcon = document.createElement("div");
+        // console.log("Attribution de la classe imgIcon à binIcon-" + work.id);
         myDivImgIcon.setAttribute("class","imgIcon");
+        myDivImgIcon.setAttribute("id","binIcon-" + work.id);
         newWork.appendChild(myDivImgIcon);
         //Création d'une balise icone poubelle, enfant du div "myDivImgIcon"
         let newIcon = document.createElement("i");

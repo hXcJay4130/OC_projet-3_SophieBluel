@@ -396,12 +396,24 @@ nav ul li span a:hover {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	padding-bottom:60px;
-	border-bottom: solid 1px lightgrey;
+	flex-grow: 1;
+	/* align-items: center; */
+	background-color: transparent;
+	/* max-height: 100vh; */
+	/* padding-bottom:60px;
+	border-bottom: solid 1px lightgrey; */
 }
 #createForm select, #createForm input {
 	font-size: 0.9em;
 }
+#createForm label[for="title"], #createForm label[for="category"]{
+	align-self: flex-start;
+}
+#underline {
+	border-bottom: solid 1px lightgrey;
+	margin-top: 60px;
+}
+
 .active {
     display: flex !important;
 }
@@ -470,8 +482,11 @@ nav ul li span a:hover {
 	/* width: 80%; */
 	border-radius: 3px;
 	background-color: #E8F1F6;
+	max-height: 300px;
 }
-
+#imagePreview {
+	height: 100%;
+}
 #imgDownload label {
 	margin-top: 20px;
 }
@@ -479,12 +494,15 @@ nav ul li span a:hover {
 #imgDownload p {
 	margin-top: 20px;
 }
-
+.notVisible {
+	display: none;
+}
 #btn-add {
 	font: 700 16px "Syne";
 	border-radius: 30px;
 	border: none;
-	padding: 12px 40px;
+	padding: 12px;
+	width:175px;
 	margin-top: 40px;
 	/* margin-bottom: 20px; */
 	background-color: #CBD6DC;
@@ -496,11 +514,16 @@ nav ul li span a:hover {
 	font: 700 16px "Syne";
 	border-radius: 30px;
 	border: none;
-	padding: 12px 90px;
+	width: 250px;
+	align-self: center;
+	/* flex-grow: 0.5; */
+	padding: 12px;
 	margin-top: 40px;
 	margin-bottom: 20px;
+	/* border-top: solid 3px red; */
 	background-color: #A7A7A7;
 	color:white;
 	cursor: pointer;
 }
-	
+
+
